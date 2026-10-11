@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>새벽결 — 명함 &amp; 메일 서명</title>
+<meta property="og:title" content="새벽결 — 명함">
+<meta property="og:description" content="이력서 한 장 대신, 매일 쌓아온 기록으로 나를 보여줍니다.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://saebyeokgyeol.vercel.app">
+<meta property="og:image" content="https://saebyeokgyeol.vercel.app/og.png">
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.css">
+<style>
+:root{
+  --primary:#8CA3BE;
+  --primary-2:#5B7089;
+  --bg:#12161C;
+  --surface:#1B212B;
+  --surface-2:#232B37;
+  --ink:#F1EFEA;
+  --ink-2:#9BA3AD;
+  --accent:#C98A4B;
+  --accent-bright:#E3A868;
+  --on-accent:#1A140D;
+  --line:#2A313C;
+  --sans:'Pretendard', -apple-system, sans-serif;
+  --shadow:0 8px 24px rgba(0,0,0,.35);
+}
+*{box-sizing:border-box;}
+body{background:var(--bg); color:var(--ink); font-family:var(--sans); margin:0;}
+
+h1,.h1,.wordmark{font-family:var(--sans); font-weight:900; letter-spacing:-.02em; line-height:1.15; color:var(--ink); margin:0;}
+h2,.h2{font-family:var(--sans); font-weight:800; letter-spacing:-.01em; line-height:1.25; margin:0;}
+h3,.h3{font-family:var(--sans); font-weight:700; line-height:1.35; margin:0;}
+p,.body{font-family:var(--sans); font-weight:400; line-height:1.6; color:var(--ink); margin:0;}
+.caption{font-family:var(--sans); font-weight:500; font-size:13px; color:var(--ink-2);}
+
+.card{
+  background:var(--surface);
+  border:1px solid var(--line);
+  border-radius:16px;
+  box-shadow:var(--shadow), inset 0 1px 0 rgba(255,255,255,.03);
+  padding:24px;
+}
+
+.accent-text{color:var(--accent-bright);}
+
+.wordmark-lockup{display:inline-flex; align-items:center; gap:10px;}
+.wordmark-lockup svg{width:28px; height:28px; color:var(--primary); flex:none;}
+.wordmark-lockup b{font-family:var(--sans); font-weight:900; font-size:22px; letter-spacing:-.02em; color:var(--ink);}
+
+/* ---- 페이지 레이아웃 ---- */
+.page{max-width:1040px; margin:0 auto; padding:72px 32px 96px;}
+.page-head{margin-bottom:56px;}
+.page-head .kicker{color:var(--primary); font-weight:700; font-size:13px; letter-spacing:.02em; display:block; margin-bottom:12px;}
+.page-head h1{font-size:34px;}
+.page-head p{color:var(--ink-2); font-size:15px; margin-top:12px;}
+
+.slot-label{font-size:13px; font-weight:700; color:var(--ink-2); letter-spacing:.01em; margin:0 0 14px;}
+
+.cards-row{display:flex; gap:40px; flex-wrap:wrap; margin-bottom:72px;}
+.card-slot{flex:1 1 480px;}
+
+/* 명함 목업 : 480 x 274 (표준 명함 비율) */
+.bizcard{
+  width:480px; height:274px; max-width:100%;
+  border-radius:14px; position:relative; overflow:hidden;
+  box-shadow:0 18px 40px rgba(0,0,0,.45);
+  border:1px solid var(--line);
+}
+.bizcard.front{
+  background:var(--bg);
+  display:flex; flex-direction:column; align-items:center; justify-content:center; gap:14px;
+}
+.bizcard.front .wordmark-lockup svg{width:36px; height:36px;}
+.bizcard.front .wordmark-lockup b{font-size:26px;}
+.bizcard.front .slogan{font-size:13px; color:var(--ink-2); letter-spacing:.02em;}
+
+.bizcard.back{
+  background:var(--surface);
+  padding:32px 34px;
+  display:flex; flex-direction:column; justify-content:center;
+}
+.bizcard.back .mini-mark{position:absolute; top:24px; right:26px; color:var(--primary-2);}
+.bizcard.back .mini-mark svg{width:20px; height:20px;}
+.bizcard.back .name{font-size:22px; font-weight:700; color:var(--ink);}
+.bizcard.back .role{font-size:14px; font-weight:500; color:var(--ink-2); margin-top:4px;}
+.bizcard.back .rule{width:36px; height:1px; background:var(--line); margin:18px 0;}
+.bizcard.back .contact{font-size:13px; font-weight:500; color:var(--ink-2); line-height:1.8;}
+.bizcard.back .demo-flag{position:absolute; left:34px; bottom:20px; font-size:11px; color:var(--ink-2); opacity:.65;}
+
+/* 메일 서명 섹션 */
+.signature-section{margin-bottom:24px;}
+.email-preview{
+  background:#FFFFFF; border-radius:12px; padding:28px 30px; width:420px; max-width:100%;
+  box-shadow:0 12px 30px rgba(0,0,0,.35);
+  margin-bottom:22px;
+}
+.email-preview table{border-collapse:collapse;}
+.email-preview .sig-name{font-weight:900; font-size:15px; letter-spacing:-.01em; color:var(--primary-2);}
+.email-preview .sig-slogan{font-size:12px; font-weight:500; color:var(--primary-2); margin-top:4px;}
+.email-preview .sig-mark{width:20px; height:20px; color:var(--primary-2); flex:none;}
+
+.code-block{
+  background:var(--bg); border:1px solid var(--line); border-radius:12px;
+  padding:20px 22px; overflow-x:auto; max-width:640px;
+  font-size:12.5px; line-height:1.7; color:var(--ink-2);
+  font-family:'SFMono-Regular', Menlo, Consolas, monospace;
+}
+.code-block .tag-token{color:var(--primary);}
+.code-block .attr-token{color:var(--primary-2);}
+
+.note{font-size:13px; color:var(--ink-2); max-width:600px; margin-top:14px; line-height:1.6;}
+
+footer{padding:36px 32px 0; border-top:1px solid var(--line); margin-top:32px;}
+footer .foot-row{max-width:1040px; margin:0 auto; display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:12px;}
+footer .foot-meta{font-size:12px; color:var(--ink-2); opacity:.7;}
+
+@media (max-width:760px){
+  .cards-row{flex-direction:column;}
+}
+
+/* 처음으로 — 모음 페이지(index.html)로 돌아가기 */
+.home-link{
+  display:inline-flex; align-items:center; gap:6px; height:34px; padding:0 14px;
+  border-radius:999px; background:var(--surface); border:1px solid var(--line);
+  color:var(--ink-2, var(--ink2)); font-size:13px; text-decoration:none; white-space:nowrap;
+}
+.home-link:hover{color:var(--ink); border-color:var(--primary-2);}
+.home-link.fixed{position:fixed; top:16px; left:16px; z-index:20; box-shadow:0 4px 14px rgba(0,0,0,.08);}
+</style>
+</head>
+<body><a class="home-link fixed" href="index.html" aria-label="처음으로 (모음 페이지)">← 처음으로</a>
+
+
+<div class="page">
+
+  <div class="page-head">
+    <span class="kicker">브랜드 키트 산출물</span>
+    <h1>새벽결 <span class="accent-text">명함</span> &amp; 메일 서명</h1>
+    <p>인쇄·발송 전 확인용 목업입니다. 색·폰트는 새벽결 브랜드 스킬 토큰을 그대로 사용했습니다.</p>
+  </div>
+
+  <div class="cards-row">
+    <div class="card-slot">
+      <p class="slot-label">명함 — 앞면</p>
+      <div class="bizcard front">
+        <span class="wordmark-lockup">
+          <svg viewBox="0 0 64 64" fill="none" aria-label="새벽결">
+            <path d="M39 9a8 8 0 1 1 0 16" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" opacity="0.9"/>
+            <rect x="5" y="47" width="54" height="7" rx="2.5" fill="currentColor"/>
+            <rect x="9" y="36" width="44" height="7" rx="2.5" fill="currentColor" opacity="0.8"/>
+            <rect x="15" y="25" width="32" height="7" rx="2.5" fill="currentColor" opacity="0.6"/>
+            <rect x="21" y="14" width="20" height="7" rx="2.5" fill="currentColor" opacity="0.45"/>
+          </svg>
+          <b>새벽결</b>
+        </span>
+        <span class="slogan">쌓이면, 보인다</span>
+      </div>
+    </div>
+
+    <div class="card-slot">
+      <p class="slot-label">명함 — 뒷면</p>
+      <div class="bizcard back">
+        <div class="mini-mark" aria-hidden="true">
+          <svg viewBox="0 0 64 64" fill="none"><rect x="5" y="47" width="54" height="7" rx="2.5" fill="currentColor"/><rect x="9" y="36" width="44" height="7" rx="2.5" fill="currentColor" opacity="0.8"/><rect x="15" y="25" width="32" height="7" rx="2.5" fill="currentColor" opacity="0.6"/><rect x="21" y="14" width="20" height="7" rx="2.5" fill="currentColor" opacity="0.45"/></svg>
+        </div>
+        <div class="name">OOO</div>
+        <div class="role">Founder · 새벽결</div>
+        <div class="rule"></div>
+        <div class="contact">
+          hello@saebyeokgyeol.demo<br>
+          010-0000-0000
+        </div>
+        <span class="demo-flag">데모용 가상 정보</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="signature-section">
+    <p class="slot-label">메일 서명 (흰 배경 메일함 기준 미리보기)</p>
+    <div class="email-preview">
+      <table>
+        <tr>
+          <td style="vertical-align:middle; padding-right:10px;">
+            <svg class="sig-mark" viewBox="0 0 64 64" fill="none"><rect x="5" y="47" width="54" height="7" rx="2.5" fill="currentColor"/><rect x="9" y="36" width="44" height="7" rx="2.5" fill="currentColor" opacity="0.8"/><rect x="15" y="25" width="32" height="7" rx="2.5" fill="currentColor" opacity="0.6"/><rect x="21" y="14" width="20" height="7" rx="2.5" fill="currentColor" opacity="0.45"/></svg>
+          </td>
+          <td>
+            <div class="sig-name">새벽결</div>
+            <div class="sig-slogan">쌓이면, 보인다</div>
+          </td>
+        </tr>
+      </table>
+    </div>
+
+    <pre class="code-block"><code>&lt;<span class="tag-token">table</span> <span class="attr-token">style</span>="font-family:Pretendard,-apple-system,sans-serif;color:#5B7089;"&gt;
+  &lt;<span class="tag-token">tr</span>&gt;&lt;<span class="tag-token">td</span>&gt;
+    &lt;<span class="tag-token">span</span> <span class="attr-token">class</span>="wordmark-lockup"&gt;
+      &lt;!-- mark.svg 인라인, 20px, color:#5B7089 --&gt;
+      &lt;<span class="tag-token">b</span> <span class="attr-token">style</span>="font-weight:900;font-size:15px;"&gt;새벽결&lt;/<span class="tag-token">b</span>&gt;
+    &lt;/<span class="tag-token">span</span>&gt;
+    &lt;<span class="tag-token">div</span> <span class="attr-token">style</span>="font-size:12px;color:#5B7089;margin-top:4px;"&gt;쌓이면, 보인다&lt;/<span class="tag-token">div</span>&gt;
+  &lt;/<span class="tag-token">td</span>&gt;&lt;/<span class="tag-token">tr</span>&gt;
+&lt;/<span class="tag-token">table</span>&gt;</code></pre>
+
+    <p class="note">어두운 배경 화면(웹·PPT·카드뉴스)에서는 워드마크를 <code>--primary</code>(#8CA3BE)로 쓰지만, 대부분의 이메일 클라이언트는 흰 배경이므로 메일 서명에서는 <code>--primary-2</code>(#5B7089)로 바꿔 가독성을 확보했습니다.</p>
+  </div>
+
+</div>
+
+<footer>
+  <div class="foot-row">
+    <span class="wordmark-lockup">
+      <svg viewBox="0 0 64 64" fill="none" aria-label="새벽결" style="width:20px;height:20px;">
+        <rect x="5" y="47" width="54" height="7" rx="2.5" fill="currentColor"/>
+        <rect x="9" y="36" width="44" height="7" rx="2.5" fill="currentColor" opacity="0.8"/>
+        <rect x="15" y="25" width="32" height="7" rx="2.5" fill="currentColor" opacity="0.6"/>
+        <rect x="21" y="14" width="20" height="7" rx="2.5" fill="currentColor" opacity="0.45"/>
+      </svg>
+      <b style="font-size:15px;">새벽결</b>
+    </span>
+    <span class="foot-meta">데모용 가상 브랜드 · © 2026 새벽결</span>
+  </div>
+</footer>
+
+<script>
+// Esc 키 → 처음으로
+document.addEventListener('keydown', function(e){ if (e.key === 'Escape') location.href = 'index.html'; });
+</script>
+</body>
+</html>

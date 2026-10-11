@@ -1,0 +1,305 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>새벽결 — 카드뉴스</title>
+<meta property="og:title" content="새벽결 — 카드뉴스">
+<meta property="og:description" content="이력서 한 장 대신, 매일 쌓아온 기록으로 나를 보여줍니다.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://saebyeokgyeol.vercel.app">
+<meta property="og:image" content="https://saebyeokgyeol.vercel.app/og.png">
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.css">
+<style>
+:root{
+  --primary:#8CA3BE;
+  --primary-2:#5B7089;
+  --bg:#12161C;
+  --surface:#1B212B;
+  --surface-2:#232B37;
+  --ink:#F1EFEA;
+  --ink-2:#9BA3AD;
+  --accent:#C98A4B;
+  --accent-bright:#E3A868;
+  --on-accent:#1A140D;
+  --line:#2A313C;
+  --sans:'Pretendard', -apple-system, sans-serif;
+  --shadow:0 8px 24px rgba(0,0,0,.35);
+}
+*{box-sizing:border-box;}
+html,body{margin:0; height:100%; background:#000; font-family:var(--sans); overflow:hidden;}
+
+h1,.h1,.wordmark{font-family:var(--sans); font-weight:900; letter-spacing:-.02em; line-height:1.15; color:var(--ink); margin:0;}
+h2,.h2{font-family:var(--sans); font-weight:800; letter-spacing:-.01em; line-height:1.25; margin:0;}
+h3,.h3{font-family:var(--sans); font-weight:700; line-height:1.35; margin:0;}
+p,.body{font-family:var(--sans); font-weight:400; line-height:1.6; color:var(--ink); margin:0;}
+.caption{font-family:var(--sans); font-weight:500; font-size:13px; color:var(--ink-2);}
+
+.card-box{
+  background:var(--surface);
+  border:1px solid var(--line);
+  border-radius:16px;
+  box-shadow:var(--shadow), inset 0 1px 0 rgba(255,255,255,.03);
+  padding:24px;
+}
+
+.btn{
+  display:inline-flex; align-items:center; gap:8px;
+  background:var(--accent); color:var(--on-accent);
+  font-weight:700; border:none; border-radius:10px;
+  padding:12px 20px; cursor:pointer; font-family:var(--sans);
+}
+
+.tag{
+  display:inline-flex; align-items:center;
+  background:var(--surface-2); color:var(--ink-2);
+  font-size:12px; font-weight:500;
+  border-radius:999px; padding:4px 12px;
+}
+
+.accent-text{color:var(--accent-bright);}
+
+.wordmark-lockup{display:inline-flex; align-items:center; gap:10px;}
+.wordmark-lockup svg{width:28px; height:28px; color:var(--primary); flex:none;}
+.wordmark-lockup b{font-family:var(--sans); font-weight:900; font-size:22px; letter-spacing:-.02em; color:var(--ink);}
+
+/* ---- 카드뉴스 셸: 1080 정사각 필름스트립 ---- */
+.viewport{
+  position:fixed; inset:0;
+  display:flex; align-items:center; justify-content:center;
+  background:#000;
+}
+.stage{
+  width:1080px; height:1080px; flex:none;
+  position:relative;
+  overflow:hidden;
+  background:var(--bg);
+  box-shadow:0 30px 80px rgba(0,0,0,.55);
+  border-radius:8px;
+  transform-origin:center center;
+}
+.track{
+  display:flex;
+  width:5400px; height:1080px;
+  transition:transform .5s cubic-bezier(.65,0,.35,1);
+}
+.card{
+  width:1080px; height:1080px; flex:0 0 1080px;
+  position:relative;
+  padding:100px;
+  display:flex; flex-direction:column; justify-content:center;
+}
+.card .idx{
+  position:absolute; top:56px; right:64px;
+  font-size:16px; color:var(--ink-2); font-weight:500;
+}
+.card .foot-logo{
+  position:absolute; left:64px; bottom:56px;
+  display:flex; align-items:center; gap:9px; color:var(--primary);
+}
+.card .foot-logo svg{width:22px; height:22px;}
+.card .foot-logo b{font-size:15px; font-weight:900; color:var(--ink-2); letter-spacing:-.01em;}
+
+.card .bg-motif{position:absolute; right:60px; bottom:60px; color:var(--primary); opacity:.05; pointer-events:none;}
+.card .bg-motif svg{width:520px; height:auto;}
+
+.card h2{font-size:58px; line-height:1.18; max-width:820px;}
+.card .body-line{font-size:24px; line-height:1.6; color:var(--ink-2); max-width:760px; margin-top:26px;}
+.card .eyebrow{color:var(--primary); font-weight:700; font-size:16px; letter-spacing:.02em; margin-bottom:20px; display:block;}
+
+/* card 1 */
+.card-1{align-items:flex-start;}
+.card-1 .cap{font-size:22px; color:var(--ink-2); margin-top:30px; max-width:640px;}
+
+/* card 4 mock row */
+.mock-tags{display:flex; gap:14px; margin-top:34px;}
+.mock-tags .card-box{width:260px; padding:22px;}
+.mock-tags h3{font-size:20px; margin:14px 0 6px;}
+.mock-tags p{font-size:14px; color:var(--ink-2); line-height:1.5;}
+
+/* card 5 closing */
+.card-5{align-items:center; text-align:center; justify-content:center;}
+.card-5 .hero-mark{color:var(--primary); margin-bottom:22px;}
+.card-5 .hero-mark svg{width:64px; height:64px;}
+.card-5 h2{font-size:56px;}
+.card-5 .cap{font-size:20px; color:var(--ink-2); margin-top:18px;}
+.card-5 .btn{margin-top:34px; font-size:16px; padding:14px 26px;}
+.card-5 .demo-note{position:absolute; bottom:44px; font-size:13px; color:var(--ink-2); opacity:.65;}
+
+/* nav controls */
+.controls{
+  position:fixed; left:0; right:0; bottom:22px;
+  display:flex; align-items:center; justify-content:center; gap:18px;
+  z-index:10;
+}
+.controls button{
+  background:var(--surface); border:1px solid var(--line); color:var(--ink-2);
+  width:34px; height:34px; border-radius:50%; cursor:pointer; font-size:16px;
+  display:flex; align-items:center; justify-content:center;
+}
+.controls button:hover{color:var(--ink); border-color:var(--primary-2);}
+.dots{display:flex; gap:9px;}
+.dots a{
+  width:9px; height:9px; border-radius:50%; background:var(--line);
+  display:block; text-decoration:none; cursor:pointer;
+}
+.dots a.active{background:var(--accent);}
+.counter{font-size:12px; color:var(--ink-2); min-width:34px; text-align:center;}
+
+/* 처음으로 — 모음 페이지(index.html)로 돌아가기 */
+.home-link{
+  display:inline-flex; align-items:center; gap:6px; height:34px; padding:0 14px;
+  border-radius:999px; background:var(--surface); border:1px solid var(--line);
+  color:var(--ink-2, var(--ink2)); font-size:13px; text-decoration:none; white-space:nowrap;
+}
+.home-link:hover{color:var(--ink); border-color:var(--primary-2);}
+.home-link.fixed{position:fixed; top:16px; left:16px; z-index:20; box-shadow:0 4px 14px rgba(0,0,0,.08);}
+</style>
+</head>
+<body>
+
+<div class="viewport">
+  <div class="stage" id="stage">
+    <div class="track" id="track">
+
+      <!-- 1. 훅 -->
+      <section class="card card-1">
+        <div class="bg-motif" aria-hidden="true">
+          <svg viewBox="0 0 64 64" fill="none"><rect x="5" y="47" width="54" height="7" rx="2.5" fill="currentColor"/><rect x="9" y="36" width="44" height="7" rx="2.5" fill="currentColor" opacity="0.8"/><rect x="15" y="25" width="32" height="7" rx="2.5" fill="currentColor" opacity="0.6"/><rect x="21" y="14" width="20" height="7" rx="2.5" fill="currentColor" opacity="0.45"/></svg>
+        </div>
+        <h2>쌓이면,<br>보인다</h2>
+        <p class="cap">반도체 공정 취준생을 위한 <span class="accent-text">성장 기록</span> 플랫폼</p>
+        <div class="idx">1</div>
+        <div class="foot-logo">
+          <svg viewBox="0 0 64 64" fill="none"><rect x="5" y="47" width="54" height="7" rx="2.5" fill="currentColor"/><rect x="9" y="36" width="44" height="7" rx="2.5" fill="currentColor" opacity="0.8"/><rect x="15" y="25" width="32" height="7" rx="2.5" fill="currentColor" opacity="0.6"/><rect x="21" y="14" width="20" height="7" rx="2.5" fill="currentColor" opacity="0.45"/></svg>
+          <b>새벽결</b>
+        </div>
+      </section>
+
+      <!-- 2. 문제 -->
+      <section class="card">
+        <span class="eyebrow">문제</span>
+        <h2>이력서 한 장으로는,<br>안 보이는 게 있다</h2>
+        <p class="body-line">개발도 디자인도 몰라서, 포트폴리오 앞에서 <span class="accent-text">작아지던 순간</span>이 있었다.</p>
+        <div class="idx">2</div>
+        <div class="foot-logo">
+          <svg viewBox="0 0 64 64" fill="none"><rect x="5" y="47" width="54" height="7" rx="2.5" fill="currentColor"/><rect x="9" y="36" width="44" height="7" rx="2.5" fill="currentColor" opacity="0.8"/><rect x="15" y="25" width="32" height="7" rx="2.5" fill="currentColor" opacity="0.6"/><rect x="21" y="14" width="20" height="7" rx="2.5" fill="currentColor" opacity="0.45"/></svg>
+          <b>새벽결</b>
+        </div>
+      </section>
+
+      <!-- 3. 계기 -->
+      <section class="card">
+        <span class="eyebrow">계기</span>
+        <h2>얇은 막 한 겹이,<br>회로가 되는 순간</h2>
+        <p class="body-line">작은 걸 <span class="accent-text">꾸준히 쌓는 일</span>, 나와 맞는다는 걸 그때 알았다.</p>
+        <div class="idx">3</div>
+        <div class="foot-logo">
+          <svg viewBox="0 0 64 64" fill="none"><rect x="5" y="47" width="54" height="7" rx="2.5" fill="currentColor"/><rect x="9" y="36" width="44" height="7" rx="2.5" fill="currentColor" opacity="0.8"/><rect x="15" y="25" width="32" height="7" rx="2.5" fill="currentColor" opacity="0.6"/><rect x="21" y="14" width="20" height="7" rx="2.5" fill="currentColor" opacity="0.45"/></svg>
+          <b>새벽결</b>
+        </div>
+      </section>
+
+      <!-- 4. 제품 (예시) -->
+      <section class="card">
+        <span class="eyebrow">새벽결이 하는 일</span>
+        <h2>매일 한 겹씩,<br><span class="accent-text">기록</span>으로 남긴다</h2>
+        <div class="mock-tags">
+          <div class="card-box">
+            <span class="tag">Day 12</span>
+            <h3>박막 증착 실습</h3>
+            <p>오늘 실습 결과를 짧게 남겼다.</p>
+          </div>
+          <div class="card-box">
+            <span class="tag">스터디</span>
+            <h3>8대 공정 노트</h3>
+            <p>핵심 개념을 다시 정리했다.</p>
+          </div>
+        </div>
+        <p class="caption" style="margin-top:22px;">예시 화면 — 실제 서비스 화면이 아닙니다.</p>
+        <div class="idx">4</div>
+        <div class="foot-logo">
+          <svg viewBox="0 0 64 64" fill="none"><rect x="5" y="47" width="54" height="7" rx="2.5" fill="currentColor"/><rect x="9" y="36" width="44" height="7" rx="2.5" fill="currentColor" opacity="0.8"/><rect x="15" y="25" width="32" height="7" rx="2.5" fill="currentColor" opacity="0.6"/><rect x="21" y="14" width="20" height="7" rx="2.5" fill="currentColor" opacity="0.45"/></svg>
+          <b>새벽결</b>
+        </div>
+      </section>
+
+      <!-- 5. 클로징 -->
+      <section class="card card-5">
+        <div class="hero-mark">
+          <svg viewBox="0 0 64 64" fill="none"><path d="M39 9a8 8 0 1 1 0 16" stroke="currentColor" stroke-width="2" stroke-linecap="round" opacity="0.9"/><rect x="5" y="47" width="54" height="7" rx="2.5" fill="currentColor"/><rect x="9" y="36" width="44" height="7" rx="2.5" fill="currentColor" opacity="0.8"/><rect x="15" y="25" width="32" height="7" rx="2.5" fill="currentColor" opacity="0.6"/><rect x="21" y="14" width="20" height="7" rx="2.5" fill="currentColor" opacity="0.45"/></svg>
+        </div>
+        <h2>쌓이면, 보인다</h2>
+        <p class="cap">오늘의 <span class="accent-text">기록</span>부터, 새벽결</p>
+        <span class="btn">새벽결 시작하기</span>
+        <div class="idx">5</div>
+        <p class="demo-note">데모용 가상 브랜드</p>
+      </section>
+
+    </div>
+  </div>
+</div>
+
+<div class="controls">
+  <a class="home-link" href="index.html" aria-label="처음으로 (모음 페이지)">⌂ 처음으로</a>
+  <button id="prevBtn" aria-label="이전 카드">‹</button>
+  <div class="dots" id="dots">
+    <a data-i="0"></a>
+    <a data-i="1"></a>
+    <a data-i="2"></a>
+    <a data-i="3"></a>
+    <a data-i="4"></a>
+  </div>
+  <button id="nextBtn" aria-label="다음 카드">›</button>
+  <span class="counter" id="counter">1 / 5</span>
+</div>
+
+<script>
+(function(){
+  var TOTAL = 5;
+  var CARD = 1080;
+  var stage = document.getElementById('stage');
+  var track = document.getElementById('track');
+  var dots = Array.prototype.slice.call(document.querySelectorAll('#dots a'));
+  var counter = document.getElementById('counter');
+  var i = 0;
+
+  function fitStage(){
+    var margin = 0.9;
+    var scale = Math.min(window.innerWidth / CARD, window.innerHeight / CARD) * margin;
+    stage.style.transform = 'scale(' + scale + ')';
+  }
+  window.addEventListener('resize', fitStage);
+  fitStage();
+
+  function render(){
+    track.style.transform = 'translateX(-' + (i * CARD) + 'px)';
+    dots.forEach(function(d, di){ d.classList.toggle('active', di === i); });
+    counter.textContent = (i + 1) + ' / ' + TOTAL;
+  }
+
+  function goTo(n){
+    i = Math.max(0, Math.min(TOTAL - 1, n));
+    render();
+  }
+
+  dots.forEach(function(d, di){ d.addEventListener('click', function(){ goTo(di); }); });
+  document.getElementById('prevBtn').addEventListener('click', function(){ goTo(i - 1); });
+  document.getElementById('nextBtn').addEventListener('click', function(){ goTo(i + 1); });
+
+  document.addEventListener('keydown', function(e){
+    if (e.key === 'ArrowRight') goTo(i + 1);
+    if (e.key === 'ArrowLeft') goTo(i - 1);
+  });
+
+  render();
+})();
+</script>
+
+<script>
+// Esc 키 → 처음으로
+document.addEventListener('keydown', function(e){ if (e.key === 'Escape') location.href = 'index.html'; });
+</script>
+</body>
+</html>

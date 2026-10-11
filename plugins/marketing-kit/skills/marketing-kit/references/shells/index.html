@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>새벽결 — 브랜드 키트</title>
+
+<meta property="og:title" content="새벽결 — 쌓이면, 보인다">
+<meta property="og:description" content="이력서 한 장 대신, 매일 쌓아온 기록으로 나를 보여줍니다.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://saebyeokgyeol.vercel.app">
+<meta property="og:image" content="https://saebyeokgyeol.vercel.app/og.png">
+
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;700;800;900&display=swap">
+<style>
+  :root{
+    --primary:#8CA3BE;
+    --primary-2:#5B7089;
+    --bg:#12161C;
+    --surface:#1B212B;
+    --surface-2:#232B37;
+    --ink:#F1EFEA;
+    --ink-2:#9BA3AD;
+    --accent:#C98A4B;
+    --accent-bright:#E3A868;
+    --on-accent:#1A140D;
+    --line:#2A313C;
+    --sans:'Pretendard','Noto Sans KR',-apple-system,BlinkMacSystemFont,sans-serif;
+  }
+  *{box-sizing:border-box;}
+  body{
+    margin:0;
+    background:var(--bg);
+    color:var(--ink);
+    font-family:var(--sans);
+    padding:72px 24px 96px;
+  }
+  .page{
+    max-width:880px;
+    margin:0 auto;
+    display:flex;
+    flex-direction:column;
+    gap:56px;
+  }
+  .hero{display:flex; flex-direction:column; gap:16px;}
+  .wordmark-lockup{display:inline-flex; align-items:center; gap:16px;}
+  .wordmark-lockup svg{width:44px; height:44px; color:var(--primary); flex-shrink:0;}
+  .wordmark-lockup b{
+    font-weight:900; font-size:clamp(34px,7vw,52px); letter-spacing:-.02em;
+    line-height:1; color:var(--ink); text-wrap:balance;
+  }
+  .slogan{font-weight:700; font-size:20px; letter-spacing:-.01em; color:var(--accent-bright); margin:0;}
+  .subcopy{font-weight:400; font-size:16px; line-height:1.6; color:var(--ink-2); margin:0; max-width:46ch;}
+
+  .grid{
+    display:grid;
+    grid-template-columns:repeat(2,1fr);
+    gap:16px;
+  }
+  .card{
+    display:flex;
+    flex-direction:column;
+    justify-content:space-between;
+    gap:20px;
+    background:var(--surface);
+    border:1px solid var(--line);
+    border-radius:16px;
+    padding:24px;
+    text-decoration:none;
+    box-shadow:0 8px 24px rgba(0,0,0,.35), inset 0 1px 0 rgba(255,255,255,.03);
+    transition:border-color .15s ease;
+  }
+  .card:hover{border-color:var(--primary-2);}
+  .card .eyebrow{
+    font-size:12px; font-weight:700; letter-spacing:.1em; text-transform:uppercase; color:var(--ink-2);
+  }
+  .card h3{margin:0; font-weight:800; font-size:20px; color:var(--ink);}
+  .card p{margin:0; font-size:14px; line-height:1.5; color:var(--ink-2);}
+  .card .go{font-size:13px; font-weight:700; color:var(--accent-bright);}
+
+  footer{
+    border-top:1px solid var(--line);
+    padding-top:24px;
+    font-size:13px;
+    line-height:1.6;
+    color:var(--ink-2);
+  }
+
+  @media (max-width:540px){
+    body{padding:48px 18px 72px;}
+    .page{gap:44px;}
+    .grid{grid-template-columns:1fr;}
+    .wordmark-lockup svg{width:34px; height:34px;}
+    .wordmark-lockup{gap:10px;}
+  }
+</style>
+</head>
+<body>
+<div class="page">
+
+  <section class="hero">
+    <div class="wordmark-lockup">
+      <svg viewBox="0 0 64 64" fill="none" aria-label="새벽결 심볼">
+        <path d="M39 9a8 8 0 1 1 0 16" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" opacity="0.9"/>
+        <rect x="5" y="47" width="54" height="7" rx="2.5" fill="currentColor"/>
+        <rect x="9" y="36" width="44" height="7" rx="2.5" fill="currentColor" opacity="0.8"/>
+        <rect x="15" y="25" width="32" height="7" rx="2.5" fill="currentColor" opacity="0.6"/>
+        <rect x="21" y="14" width="20" height="7" rx="2.5" fill="currentColor" opacity="0.45"/>
+      </svg>
+      <b>새벽결</b>
+    </div>
+    <p class="slogan">쌓이면, 보인다</p>
+    <p class="subcopy">이력서 한 장 대신, 매일 쌓아온 기록으로 나를 보여줍니다. 반도체 공정을 준비하는 취준생을 위한 성장 기록 플랫폼.</p>
+  </section>
+
+  <section class="grid">
+    <a class="card" href="web.html">
+      <div>
+        <p class="eyebrow">Web</p>
+        <h3 style="margin-top:6px;">웹 랜딩</h3>
+        <p style="margin-top:8px;">새벽결 소개 페이지</p>
+      </div>
+      <span class="go">열어보기 →</span>
+    </a>
+    <a class="card" href="ppt.html">
+      <div>
+        <p class="eyebrow">PPT</p>
+        <h3 style="margin-top:6px;">회사소개</h3>
+        <p style="margin-top:8px;">6슬라이드 · 방향키로 이동</p>
+      </div>
+      <span class="go">열어보기 →</span>
+    </a>
+    <a class="card" href="cardnews.html">
+      <div>
+        <p class="eyebrow">SNS</p>
+        <h3 style="margin-top:6px;">카드뉴스</h3>
+        <p style="margin-top:8px;">정사각 5장 · 좌우로 이동</p>
+      </div>
+      <span class="go">열어보기 →</span>
+    </a>
+    <a class="card" href="namecard.html">
+      <div>
+        <p class="eyebrow">Namecard</p>
+        <h3 style="margin-top:6px;">명함 &amp; 서명</h3>
+        <p style="margin-top:8px;">앞뒤 명함 · 메일 서명</p>
+      </div>
+      <span class="go">열어보기 →</span>
+    </a>
+  </section>
+
+  <footer>새벽결 브랜드 키트 · 데모용 가상 브랜드</footer>
+
+</div>
+</body>
+</html>

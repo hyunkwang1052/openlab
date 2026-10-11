@@ -1,0 +1,363 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>새벽결 — 회사소개</title>
+<meta property="og:title" content="새벽결 — 회사소개">
+<meta property="og:description" content="이력서 한 장 대신, 매일 쌓아온 기록으로 나를 보여줍니다.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://saebyeokgyeol.vercel.app">
+<meta property="og:image" content="https://saebyeokgyeol.vercel.app/og.png">
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.css">
+<style>
+:root{
+  --primary:#8CA3BE;
+  --primary-2:#5B7089;
+  --bg:#12161C;
+  --surface:#1B212B;
+  --surface-2:#232B37;
+  --ink:#F1EFEA;
+  --ink-2:#9BA3AD;
+  --accent:#C98A4B;
+  --accent-bright:#E3A868;
+  --on-accent:#1A140D;
+  --line:#2A313C;
+  --sans:'Pretendard', -apple-system, sans-serif;
+  --shadow:0 8px 24px rgba(0,0,0,.35);
+}
+*{box-sizing:border-box;}
+html,body{margin:0; height:100%; background:#000; font-family:var(--sans); overflow:hidden;}
+
+h1,.h1,.wordmark{font-family:var(--sans); font-weight:900; letter-spacing:-.02em; line-height:1.15; color:var(--ink); margin:0;}
+h2,.h2{font-family:var(--sans); font-weight:800; letter-spacing:-.01em; line-height:1.25; margin:0;}
+h3,.h3{font-family:var(--sans); font-weight:700; line-height:1.35; margin:0;}
+p,.body{font-family:var(--sans); font-weight:400; line-height:1.6; color:var(--ink); margin:0;}
+.caption{font-family:var(--sans); font-weight:500; font-size:13px; color:var(--ink-2);}
+
+.card{
+  background:var(--surface);
+  border:1px solid var(--line);
+  border-radius:16px;
+  box-shadow:var(--shadow), inset 0 1px 0 rgba(255,255,255,.03);
+  padding:24px;
+}
+.card .accent{color:var(--accent-bright);}
+
+.btn{
+  display:inline-flex; align-items:center; gap:8px;
+  background:var(--accent); color:var(--on-accent);
+  font-weight:700; border:none; border-radius:10px;
+  padding:12px 20px; cursor:pointer; font-family:var(--sans);
+}
+.btn.secondary{
+  background:transparent; color:var(--primary);
+  border:1px solid var(--primary-2);
+}
+
+.tag{
+  display:inline-flex; align-items:center;
+  background:var(--surface-2); color:var(--ink-2);
+  font-size:12px; font-weight:500;
+  border-radius:999px; padding:4px 12px;
+}
+
+.accent-text{color:var(--accent-bright);}
+
+.wordmark-lockup{display:inline-flex; align-items:center; gap:10px;}
+.wordmark-lockup svg{width:28px; height:28px; color:var(--primary); flex:none;}
+.wordmark-lockup b{font-family:var(--sans); font-weight:900; font-size:22px; letter-spacing:-.02em; color:var(--ink);}
+
+/* ---- PPT 셸: auto-fit 스테이지 + hash 네비게이션 ---- */
+.stage-viewport{
+  position:fixed; inset:0;
+  display:flex; align-items:center; justify-content:center;
+  background:#000;
+}
+.stage{
+  width:1280px; height:720px; flex:none;
+  position:relative;
+  background:var(--bg);
+  box-shadow:0 30px 80px rgba(0,0,0,.55);
+  border-radius:6px;
+  overflow:hidden;
+  transform-origin:center center;
+}
+.slide{
+  position:absolute; inset:0;
+  display:none;
+  padding:64px 80px;
+  flex-direction:column;
+}
+.slide.active{display:flex;}
+.slide-logo{
+  position:absolute; left:40px; bottom:32px;
+  display:flex; align-items:center; gap:8px;
+  color:var(--primary);
+}
+.slide-logo svg{width:18px; height:18px; color:var(--primary);}
+.slide-logo b{font-family:var(--sans); font-weight:900; font-size:13px; letter-spacing:-.01em; color:var(--ink-2);}
+.slide-index{
+  position:absolute; right:40px; bottom:32px;
+  font-size:12px; color:var(--ink-2); font-weight:500;
+}
+
+/* 공통 타이틀 구성 */
+.eyebrow-label{color:var(--primary); font-weight:700; font-size:13px; letter-spacing:.02em; display:block; margin-bottom:14px;}
+.slide h2.title{font-size:38px; margin-bottom:22px; max-width:920px;}
+.slide p.lead{font-size:17px; line-height:1.75; color:var(--ink-2); max-width:640px;}
+
+/* Slide 1 — 타이틀 */
+.slide-title{align-items:center; justify-content:center; text-align:center; gap:22px;}
+.slide-title .hero-mark{color:var(--primary);}
+.slide-title .hero-mark svg{width:56px; height:56px;}
+.slide-title h1{font-size:56px;}
+.slide-title .sub{font-size:18px; color:var(--ink-2); max-width:520px; margin-top:6px;}
+.slide-title .cat{font-size:13px; color:var(--ink-2); opacity:.8; margin-top:30px;}
+
+/* bullets */
+.bullets{list-style:none; margin:0; padding:0; display:flex; flex-direction:column; gap:16px; max-width:680px;}
+.bullets li{display:flex; gap:14px; align-items:flex-start; font-size:17px; line-height:1.6; color:var(--ink-2);}
+.bullets li .num{flex:none; width:26px; height:26px; border-radius:50%; border:1px solid var(--line); display:flex; align-items:center; justify-content:center; font-size:12px; color:var(--primary); font-weight:700;}
+
+/* pillar cards (slide 3) */
+.pillars{display:grid; grid-template-columns:repeat(3,1fr); gap:18px; margin-top:8px;}
+.pillar h3{font-size:18px; margin:12px 0 8px;}
+.pillar p{font-size:14px; color:var(--ink-2); line-height:1.55;}
+.pillar .pnum{font-size:12px; color:var(--primary-2); font-weight:700;}
+.pillar.is-key{border-color:var(--accent);}
+
+/* records mock (slide 4) */
+.mock-row{display:flex; gap:16px; margin-top:10px;}
+.mock-card{width:220px;}
+.mock-card h3{font-size:15px; margin:12px 0 6px;}
+.mock-card p{font-size:13px; color:var(--ink-2); line-height:1.5;}
+
+/* story (slide 5) */
+.slide-story{justify-content:center;}
+.slide-story blockquote{margin:0; font-size:24px; line-height:1.6; color:var(--ink); font-weight:500; max-width:760px;}
+
+/* closing (slide 6) */
+.slide-closing{align-items:center; justify-content:center; text-align:center; gap:18px;}
+.slide-closing h1{font-size:48px;}
+.slide-closing p{font-size:16px; color:var(--ink-2);}
+
+/* nav controls */
+.controls{
+  position:fixed; left:0; right:0; bottom:22px;
+  display:flex; align-items:center; justify-content:center; gap:18px;
+  z-index:10;
+}
+.controls button{
+  background:var(--surface); border:1px solid var(--line); color:var(--ink-2);
+  width:34px; height:34px; border-radius:50%; cursor:pointer; font-size:16px;
+  display:flex; align-items:center; justify-content:center;
+}
+.controls button:hover{color:var(--ink); border-color:var(--primary-2);}
+.dots{display:flex; gap:9px;}
+.dots a{
+  width:9px; height:9px; border-radius:50%; background:var(--line);
+  display:block; text-decoration:none;
+}
+.dots a.active{background:var(--accent);}
+
+/* 처음으로 — 모음 페이지(index.html)로 돌아가기 */
+.home-link{
+  display:inline-flex; align-items:center; gap:6px; height:34px; padding:0 14px;
+  border-radius:999px; background:var(--surface); border:1px solid var(--line);
+  color:var(--ink-2, var(--ink2)); font-size:13px; text-decoration:none; white-space:nowrap;
+}
+.home-link:hover{color:var(--ink); border-color:var(--primary-2);}
+.home-link.fixed{position:fixed; top:16px; left:16px; z-index:20; box-shadow:0 4px 14px rgba(0,0,0,.08);}
+</style>
+</head>
+<body>
+
+<div class="stage-viewport">
+  <div class="stage" id="stage">
+
+    <!-- 1. 타이틀 -->
+    <section class="slide slide-title active" data-slide="1">
+      <div class="hero-mark">
+        <svg viewBox="0 0 64 64" fill="none" aria-label="새벽결">
+          <path d="M39 9a8 8 0 1 1 0 16" stroke="currentColor" stroke-width="2" stroke-linecap="round" opacity="0.9"/>
+          <rect x="5" y="47" width="54" height="7" rx="2.5" fill="currentColor"/>
+          <rect x="9" y="36" width="44" height="7" rx="2.5" fill="currentColor" opacity="0.8"/>
+          <rect x="15" y="25" width="32" height="7" rx="2.5" fill="currentColor" opacity="0.6"/>
+          <rect x="21" y="14" width="20" height="7" rx="2.5" fill="currentColor" opacity="0.45"/>
+        </svg>
+      </div>
+      <h1>쌓이면, 보인다</h1>
+      <p class="sub">이력서 한 장 대신, 매일 쌓아온 기록으로 나를 보여줍니다.</p>
+      <p class="cat">취준생을 위한 성장 기록 플랫폼 · 새벽결 회사소개 · 데모용 가상 브랜드</p>
+      <div class="slide-index">1 / 6</div>
+    </section>
+
+    <!-- 2. 문제 정의 -->
+    <section class="slide" data-slide="2">
+      <span class="eyebrow-label">문제</span>
+      <h2 class="title">이력서 한 장으로는, <span class="accent-text">안 보이는 게</span> 있습니다.</h2>
+      <ul class="bullets">
+        <li><span class="num">1</span>개발도 디자인도 할 줄 몰라서, 시작을 못 했던 순간이 있습니다.</li>
+        <li><span class="num">2</span>매일 공부하고 실습한 과정은, 대부분 기록되지 않고 사라집니다.</li>
+        <li><span class="num">3</span>남들의 포트폴리오 앞에서, 스스로 작아지는 취준생들이 있습니다.</li>
+      </ul>
+      <div class="slide-logo">
+        <svg viewBox="0 0 64 64" fill="none"><rect x="5" y="47" width="54" height="7" rx="2.5" fill="currentColor"/><rect x="9" y="36" width="44" height="7" rx="2.5" fill="currentColor" opacity="0.8"/><rect x="15" y="25" width="32" height="7" rx="2.5" fill="currentColor" opacity="0.6"/><rect x="21" y="14" width="20" height="7" rx="2.5" fill="currentColor" opacity="0.45"/></svg>
+        <b>새벽결</b>
+      </div>
+      <div class="slide-index">2 / 6</div>
+    </section>
+
+    <!-- 3. 새벽결이 하는 일 -->
+    <section class="slide" data-slide="3">
+      <span class="eyebrow-label">새벽결이 하는 일</span>
+      <h2 class="title">기록을 결로, 결을 포트폴리오로</h2>
+      <div class="pillars">
+        <div class="card pillar">
+          <span class="pnum">01</span>
+          <h3>매일 기록</h3>
+          <p>스터디·실습·프로젝트를 그날그날 짧게 남깁니다.</p>
+        </div>
+        <div class="card pillar">
+          <span class="pnum">02</span>
+          <h3>결로 쌓기</h3>
+          <p>흩어진 기록이 쌓여 나만의 결(포트폴리오)이 됩니다.</p>
+        </div>
+        <div class="card pillar is-key">
+          <span class="pnum" style="color:var(--accent-bright);">03</span>
+          <h3>보여주기</h3>
+          <p>이력서 한 장 대신, 쌓인 기록으로 나를 보여줍니다.</p>
+        </div>
+      </div>
+      <div class="slide-logo">
+        <svg viewBox="0 0 64 64" fill="none"><rect x="5" y="47" width="54" height="7" rx="2.5" fill="currentColor"/><rect x="9" y="36" width="44" height="7" rx="2.5" fill="currentColor" opacity="0.8"/><rect x="15" y="25" width="32" height="7" rx="2.5" fill="currentColor" opacity="0.6"/><rect x="21" y="14" width="20" height="7" rx="2.5" fill="currentColor" opacity="0.45"/></svg>
+        <b>새벽결</b>
+      </div>
+      <div class="slide-index">3 / 6</div>
+    </section>
+
+    <!-- 4. 예시 화면 -->
+    <section class="slide" data-slide="4">
+      <span class="eyebrow-label">예시 화면</span>
+      <h2 class="title">쌓이는 하루, 이렇게 남습니다</h2>
+      <p class="lead" style="margin-bottom:8px;">실제 서비스 화면이 아닌, 데모용 예시입니다.</p>
+      <div class="mock-row">
+        <div class="card mock-card">
+          <span class="tag">Day 12</span>
+          <h3>CVD 박막 증착 실습</h3>
+          <p>증착 파라미터와 두께 측정 결과를 정리했다.</p>
+        </div>
+        <div class="card mock-card">
+          <span class="tag">스터디</span>
+          <h3>반도체 8대 공정 정리노트</h3>
+          <p>노드별 핵심 공정을 다시 짚었다.</p>
+        </div>
+        <div class="card mock-card">
+          <span class="tag">프로젝트</span>
+          <h3>학회 발표 자료 초안</h3>
+          <p>발표 흐름을 다듬고 슬라이드를 올렸다.</p>
+        </div>
+      </div>
+      <div class="slide-logo">
+        <svg viewBox="0 0 64 64" fill="none"><rect x="5" y="47" width="54" height="7" rx="2.5" fill="currentColor"/><rect x="9" y="36" width="44" height="7" rx="2.5" fill="currentColor" opacity="0.8"/><rect x="15" y="25" width="32" height="7" rx="2.5" fill="currentColor" opacity="0.6"/><rect x="21" y="14" width="20" height="7" rx="2.5" fill="currentColor" opacity="0.45"/></svg>
+        <b>새벽결</b>
+      </div>
+      <div class="slide-index">4 / 6</div>
+    </section>
+
+    <!-- 5. 브랜드 이야기 -->
+    <section class="slide slide-story" data-slide="5">
+      <span class="eyebrow-label">브랜드 이야기</span>
+      <blockquote>학교 공정 실습에서 눈에 보이지 않는 얇은 막을 한 겹씩 쌓아 회로가 되는 걸 봤습니다. <span class="accent-text">작은 걸 꾸준히 쌓는 일</span>이 나와 맞는다는 걸, 그때 알았습니다.</blockquote>
+      <p class="lead" style="margin-top:24px;">새벽결은 그 감각을 그대로 담은 이름입니다.</p>
+      <div class="slide-logo">
+        <svg viewBox="0 0 64 64" fill="none"><rect x="5" y="47" width="54" height="7" rx="2.5" fill="currentColor"/><rect x="9" y="36" width="44" height="7" rx="2.5" fill="currentColor" opacity="0.8"/><rect x="15" y="25" width="32" height="7" rx="2.5" fill="currentColor" opacity="0.6"/><rect x="21" y="14" width="20" height="7" rx="2.5" fill="currentColor" opacity="0.45"/></svg>
+        <b>새벽결</b>
+      </div>
+      <div class="slide-index">5 / 6</div>
+    </section>
+
+    <!-- 6. 클로징 -->
+    <section class="slide slide-closing" data-slide="6">
+      <h1>쌓이면, 보인다</h1>
+      <p>오늘의 한 겹부터 시작합니다.</p>
+      <a href="#4" class="btn" style="margin-top:8px;">기록 화면 다시 보기</a>
+      <p class="caption" style="margin-top:22px; opacity:.7;">데모용 가상 브랜드 — 실제 서비스가 아닙니다.</p>
+      <div class="slide-index">6 / 6</div>
+    </section>
+
+  </div>
+</div>
+
+<div class="controls">
+  <a class="home-link" href="index.html" aria-label="처음으로 (모음 페이지)">⌂ 처음으로</a>
+  <button id="prevBtn" aria-label="이전 슬라이드">‹</button>
+  <div class="dots" id="dots">
+    <a href="#1" data-i="1"></a>
+    <a href="#2" data-i="2"></a>
+    <a href="#3" data-i="3"></a>
+    <a href="#4" data-i="4"></a>
+    <a href="#5" data-i="5"></a>
+    <a href="#6" data-i="6"></a>
+  </div>
+  <button id="nextBtn" aria-label="다음 슬라이드">›</button>
+</div>
+
+<script>
+(function(){
+  var TOTAL = 6;
+  var stage = document.getElementById('stage');
+  var slides = Array.prototype.slice.call(document.querySelectorAll('.slide'));
+  var dots = Array.prototype.slice.call(document.querySelectorAll('#dots a'));
+
+  function fitStage(){
+    var margin = 0.92;
+    var scale = Math.min(window.innerWidth / 1280, window.innerHeight / 720) * margin;
+    stage.style.transform = 'scale(' + scale + ')';
+  }
+  window.addEventListener('resize', fitStage);
+  fitStage();
+
+  function currentIndex(){
+    var n = parseInt(location.hash.replace('#',''), 10);
+    if (!n || n < 1 || n > TOTAL) return 1;
+    return n;
+  }
+
+  function render(){
+    var n = currentIndex();
+    slides.forEach(function(s){
+      s.classList.toggle('active', parseInt(s.dataset.slide,10) === n);
+    });
+    dots.forEach(function(d){
+      d.classList.toggle('active', parseInt(d.dataset.i,10) === n);
+    });
+  }
+
+  function goTo(n){
+    n = Math.max(1, Math.min(TOTAL, n));
+    location.hash = '#' + n;
+  }
+
+  window.addEventListener('hashchange', render);
+  document.getElementById('prevBtn').addEventListener('click', function(){ goTo(currentIndex() - 1); });
+  document.getElementById('nextBtn').addEventListener('click', function(){ goTo(currentIndex() + 1); });
+
+  document.addEventListener('keydown', function(e){
+    if (e.key === 'ArrowRight' || e.key === 'PageDown') goTo(currentIndex() + 1);
+    if (e.key === 'ArrowLeft' || e.key === 'PageUp') goTo(currentIndex() - 1);
+  });
+
+  if (!location.hash) location.hash = '#1';
+  render();
+})();
+</script>
+
+<script>
+// Esc 키 → 처음으로
+document.addEventListener('keydown', function(e){ if (e.key === 'Escape') location.href = 'index.html'; });
+</script>
+</body>
+</html>

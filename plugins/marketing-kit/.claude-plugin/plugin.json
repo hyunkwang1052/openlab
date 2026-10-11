@@ -1,0 +1,13 @@
+{
+  "name": "marketing-kit",
+  "version": "1.0.0",
+  "description": "소상공인 사장님의 가게 홍보물을 인터뷰부터 만들어 주는 키트: 브랜드 인터뷰 → 가게 이름·슬로건·워드마크 로고 → 디자인 시트(브랜드 스킬) → 홈페이지·소개 슬라이드·인스타 카드뉴스·명함 4종 → Vercel 배포",
+  "author": {
+    "name": "hyunkwang1052",
+    "url": "https://github.com/hyunkwang1052"
+  },
+  "homepage": "https://github.com/hyunkwang1052/openlab",
+  "repository": "https://github.com/hyunkwang1052/openlab",
+  "license": "MIT",
+  "keywords": ["marketing", "small-business", "branding", "korean", "landing-page", "cardnews", "vercel"]
+}

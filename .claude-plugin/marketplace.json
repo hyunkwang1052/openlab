@@ -1,0 +1,19 @@
+{
+  "name": "openlab",
+  "owner": {
+    "name": "hyunkwang1052",
+    "url": "https://github.com/hyunkwang1052"
+  },
+  "metadata": {
+    "description": "hyunkwang1052의 Claude Code 플러그인 모음"
+  },
+  "plugins": [
+    {
+      "name": "marketing-kit",
+      "source": "./plugins/marketing-kit",
+      "description": "소상공인 가게 홍보물 키트: 인터뷰 → 로고·디자인 시트 → 홈페이지·소개 슬라이드·카드뉴스·명함 → Vercel 배포",
+      "version": "1.0.0",
+      "category": "marketing"
+    }
+  ]
+}

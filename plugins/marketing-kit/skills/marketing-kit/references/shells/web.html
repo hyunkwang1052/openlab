@@ -1,0 +1,289 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>새벽결 — 쌓이면, 보인다</title>
+<meta property="og:title" content="새벽결 — 웹">
+<meta property="og:description" content="이력서 한 장 대신, 매일 쌓아온 기록으로 나를 보여줍니다.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://saebyeokgyeol.vercel.app">
+<meta property="og:image" content="https://saebyeokgyeol.vercel.app/og.png">
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.css">
+<style>
+:root{
+  --primary:#8CA3BE;
+  --primary-2:#5B7089;
+  --bg:#12161C;
+  --surface:#1B212B;
+  --surface-2:#232B37;
+  --ink:#F1EFEA;
+  --ink-2:#9BA3AD;
+  --accent:#C98A4B;
+  --accent-bright:#E3A868;
+  --on-accent:#1A140D;
+  --line:#2A313C;
+  --sans:'Pretendard', -apple-system, sans-serif;
+  --shadow:0 8px 24px rgba(0,0,0,.35);
+}
+
+*{box-sizing:border-box;}
+body{background:var(--bg); color:var(--ink); font-family:var(--sans); margin:0;}
+
+h1,.h1,.wordmark{font-family:var(--sans); font-weight:900; letter-spacing:-.02em; line-height:1.15; color:var(--ink); margin:0;}
+h2,.h2{font-family:var(--sans); font-weight:800; letter-spacing:-.01em; line-height:1.25; margin:0;}
+h3,.h3{font-family:var(--sans); font-weight:700; line-height:1.35; margin:0;}
+p,.body{font-family:var(--sans); font-weight:400; line-height:1.6; color:var(--ink); margin:0;}
+.caption{font-family:var(--sans); font-weight:500; font-size:13px; color:var(--ink-2);}
+
+.card{
+  background:var(--surface);
+  border:1px solid var(--line);
+  border-radius:16px;
+  box-shadow:var(--shadow), inset 0 1px 0 rgba(255,255,255,.03);
+  padding:24px;
+}
+.card .accent{color:var(--accent-bright);}
+
+.btn{
+  display:inline-flex; align-items:center; gap:8px;
+  background:var(--accent); color:var(--on-accent);
+  font-weight:700; border:none; border-radius:10px;
+  padding:12px 20px; cursor:pointer; font-family:var(--sans);
+  font-size:15px; text-decoration:none;
+}
+.btn.secondary{
+  background:transparent; color:var(--primary);
+  border:1px solid var(--primary-2);
+}
+
+.tag{
+  display:inline-flex; align-items:center;
+  background:var(--surface-2); color:var(--ink-2);
+  font-size:12px; font-weight:500;
+  border-radius:999px; padding:4px 12px;
+}
+
+.accent-text{color:var(--accent-bright);}
+
+/* 워드마크 락업 */
+.wordmark-lockup{display:inline-flex; align-items:center; gap:10px;}
+.wordmark-lockup svg{width:28px; height:28px; color:var(--primary); flex:none;}
+.wordmark-lockup b{font-family:var(--sans); font-weight:900; font-size:22px; letter-spacing:-.02em; color:var(--ink);}
+
+/* ---- 레이아웃 (토큰 외 구조 CSS) ---- */
+.wrap{max-width:1120px; margin:0 auto; padding:0 32px;}
+
+header{
+  position:sticky; top:0; z-index:50;
+  background:rgba(18,22,28,.86); backdrop-filter:blur(8px);
+  border-bottom:1px solid var(--line);
+}
+header .wrap{display:flex; align-items:center; justify-content:space-between; height:76px;}
+header nav{display:flex; gap:28px;}
+header nav a{color:var(--ink-2); font-weight:500; font-size:14px; text-decoration:none;}
+header nav a:hover{color:var(--ink);}
+
+.hero{position:relative; overflow:hidden; padding:120px 0 96px;}
+.hero-watermark{position:absolute; right:-60px; top:-40px; color:var(--primary); opacity:.06; pointer-events:none;}
+.hero-watermark svg{width:520px; height:auto;}
+.hero .wrap{position:relative; max-width:760px;}
+.eyebrow{display:inline-block; margin-bottom:22px;}
+.hero-title{font-family:var(--sans); font-weight:900; letter-spacing:-.02em; line-height:1.14; font-size:clamp(40px,6vw,68px); color:var(--ink); margin:0 0 26px;}
+.hero-sub{font-size:19px; line-height:1.7; color:var(--ink-2); max-width:560px; margin:0 0 40px;}
+.hero-actions{display:flex; gap:14px; flex-wrap:wrap; margin-bottom:22px;}
+.hero-meta{font-size:14px; color:var(--ink-2);}
+
+.kyeol-divider{display:flex; justify-content:center; color:var(--line); margin:0;}
+.kyeol-divider svg{width:120px; height:26px;}
+
+section.block{padding:96px 0;}
+section.block.tight{padding:72px 0;}
+.section-head{max-width:620px; margin:0 0 44px;}
+.section-head .eyebrow-label{color:var(--primary); font-weight:700; font-size:13px; letter-spacing:.02em; display:block; margin-bottom:10px;}
+.section-head h2{font-size:30px; margin-bottom:14px;}
+.section-head p{color:var(--ink-2); font-size:16px;}
+
+.problem p{font-size:17px; line-height:1.85; color:var(--ink-2); max-width:660px;}
+.problem strong{color:var(--ink); font-weight:700;}
+
+.records-grid{display:grid; grid-template-columns:repeat(3,1fr); gap:20px;}
+.record-card h3{font-size:17px; margin:14px 0 8px;}
+.record-card p{font-size:14px; color:var(--ink-2); line-height:1.55;}
+.record-card .row-top{display:flex; align-items:center; justify-content:space-between;}
+.record-card .date{font-size:12px; color:var(--ink-2);}
+
+.story{background:var(--surface); border-top:1px solid var(--line); border-bottom:1px solid var(--line);}
+.story .wrap{max-width:700px;}
+.story p{font-size:18px; line-height:1.9; color:var(--ink-2);}
+.story p + p{margin-top:18px;}
+
+footer{padding:56px 0 48px;}
+footer .wrap{display:flex; flex-direction:column; align-items:center; gap:16px; text-align:center;}
+footer .wordmark-lockup svg{width:22px; height:22px;}
+footer .wordmark-lockup b{font-size:17px;}
+footer .foot-slogan{font-size:14px; color:var(--ink-2);}
+footer .foot-meta{font-size:12px; color:var(--ink-2); opacity:.7;}
+
+@media (max-width:860px){
+  .records-grid{grid-template-columns:1fr;}
+  .hero{padding:96px 0 72px;}
+  section.block{padding:72px 0;}
+}
+
+/* 처음으로 — 모음 페이지(index.html)로 돌아가기. 헤더 메뉴 맨 앞, 폰에서도 보임 */
+.home-link{
+  display:inline-flex; align-items:center; gap:6px; height:34px; padding:0 14px;
+  border-radius:999px; background:var(--surface); border:1px solid var(--line);
+  color:var(--ink-2, var(--ink2)); font-size:13px; font-weight:500; text-decoration:none; white-space:nowrap;
+}
+.home-link:hover{color:var(--ink); border-color:var(--primary);}
+@media (max-width:560px){
+  header nav{gap:10px;}
+  .home-link{padding:0 11px;}
+}
+</style>
+</head>
+<body>
+
+<header>
+  <div class="wrap">
+    <span class="wordmark-lockup">
+      <svg viewBox="0 0 64 64" fill="none" aria-label="새벽결">
+        <path d="M39 9a8 8 0 1 1 0 16" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" opacity="0.9"/>
+        <rect x="5" y="47" width="54" height="7" rx="2.5" fill="currentColor"/>
+        <rect x="9" y="36" width="44" height="7" rx="2.5" fill="currentColor" opacity="0.8"/>
+        <rect x="15" y="25" width="32" height="7" rx="2.5" fill="currentColor" opacity="0.6"/>
+        <rect x="21" y="14" width="20" height="7" rx="2.5" fill="currentColor" opacity="0.45"/>
+      </svg>
+      <b>새벽결</b>
+    </span>
+    <nav>
+      <a class="home-link" href="index.html" aria-label="처음으로 (모음 페이지)">⌂ 처음으로</a>
+      <a href="#about">소개</a>
+      <a href="#records">기록</a>
+      <a href="#story">이야기</a>
+    </nav>
+  </div>
+</header>
+
+<main>
+
+  <section class="hero">
+    <div class="hero-watermark" aria-hidden="true">
+      <svg viewBox="0 0 64 64" fill="none">
+        <path d="M39 9a8 8 0 1 1 0 16" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" opacity="0.9"/>
+        <rect x="5" y="47" width="54" height="7" rx="2.5" fill="currentColor"/>
+        <rect x="9" y="36" width="44" height="7" rx="2.5" fill="currentColor" opacity="0.8"/>
+        <rect x="15" y="25" width="32" height="7" rx="2.5" fill="currentColor" opacity="0.6"/>
+        <rect x="21" y="14" width="20" height="7" rx="2.5" fill="currentColor" opacity="0.45"/>
+      </svg>
+    </div>
+    <div class="wrap">
+      <span class="eyebrow caption">반도체 공정을 준비하는 취준생을 위한 성장 기록 플랫폼</span>
+      <h1 class="hero-title">쌓이면, 보인다</h1>
+      <p class="hero-sub">이력서 한 장 대신, <span class="accent-text">매일 쌓아온 기록</span>으로 나를 보여줍니다.</p>
+      <div class="hero-actions">
+        <a href="#records" class="btn">오늘의 기록 시작하기</a>
+        <a href="#about" class="btn secondary">새벽결 소개 보기</a>
+      </div>
+    </div>
+  </section>
+
+  <div class="kyeol-divider" aria-hidden="true">
+    <svg viewBox="0 0 120 28" fill="none">
+      <rect x="0" y="21" width="120" height="4" rx="2" fill="currentColor"/>
+      <rect x="10" y="14" width="96" height="4" rx="2" fill="currentColor" opacity="0.75"/>
+      <rect x="20" y="7" width="70" height="4" rx="2" fill="currentColor" opacity="0.5"/>
+      <rect x="32" y="0" width="44" height="4" rx="2" fill="currentColor" opacity="0.3"/>
+    </svg>
+  </div>
+
+  <section class="block problem" id="about">
+    <div class="wrap">
+      <div class="section-head">
+        <span class="eyebrow-label">왜 새벽결인가</span>
+        <h2>포트폴리오 앞에서 작아지는 순간이 있습니다.</h2>
+      </div>
+      <p>개발도 디자인도 할 줄 몰라서, 남들이 만든 포트폴리오 앞에서 초라해지던 마음. 이력서 한 장으로는 그동안 쌓아온 과정이 보이지 않아서, 시작을 망설이던 시간. <strong>새벽결은 그 과정을 매일 한 겹씩 기록으로 남기는 곳입니다.</strong> 스터디, 실습, 프로젝트 — 오늘 쌓은 것을 짧게 적어두면, 그게 쌓여 나만의 결이 됩니다.</p>
+    </div>
+  </section>
+
+  <section class="block tight" id="records">
+    <div class="wrap">
+      <div class="section-head">
+        <span class="eyebrow-label">기록 카드</span>
+        <h2>쌓이는 하루, 이렇게 남습니다</h2>
+        <p class="caption">예시 화면 — 실제 서비스 화면이 아닙니다.</p>
+      </div>
+      <div class="records-grid">
+        <div class="card record-card">
+          <div class="row-top">
+            <span class="tag">Day 12</span>
+            <span class="date">2026.03.12</span>
+          </div>
+          <h3>CVD 박막 증착 실습</h3>
+          <p>증착 파라미터와 두께 측정 결과를 정리했다.</p>
+        </div>
+        <div class="card record-card">
+          <div class="row-top">
+            <span class="tag">스터디</span>
+            <span class="date">2026.03.10</span>
+          </div>
+          <h3>반도체 8대 공정 정리노트</h3>
+          <p>노드별 핵심 공정을 처음부터 다시 짚었다.</p>
+        </div>
+        <div class="card record-card">
+          <div class="row-top">
+            <span class="tag">프로젝트</span>
+            <span class="date">2026.03.07</span>
+          </div>
+          <h3>학회 발표 자료 초안</h3>
+          <p>발표 흐름을 다듬고 슬라이드 초안을 올렸다.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <div class="kyeol-divider" aria-hidden="true">
+    <svg viewBox="0 0 120 28" fill="none">
+      <rect x="0" y="21" width="120" height="4" rx="2" fill="currentColor"/>
+      <rect x="10" y="14" width="96" height="4" rx="2" fill="currentColor" opacity="0.75"/>
+      <rect x="20" y="7" width="70" height="4" rx="2" fill="currentColor" opacity="0.5"/>
+      <rect x="32" y="0" width="44" height="4" rx="2" fill="currentColor" opacity="0.3"/>
+    </svg>
+  </div>
+
+  <section class="story" id="story">
+    <div class="wrap block">
+      <div class="section-head">
+        <span class="eyebrow-label">새벽결을 시작한 이유</span>
+        <h2>얇은 막 하나가, 회로가 되는 걸 봤습니다</h2>
+      </div>
+      <p>학교 공정 실습에서 눈에 보이지 않는 얇은 막을 한 겹씩 쌓아 회로가 되는 걸 봤습니다. 작은 걸 꾸준히 쌓는 일이 나와 맞는다는 걸, 그때 알았습니다.</p>
+      <p>새벽결은 그 감각을 그대로 담은 이름입니다. 하루하루의 기록이 눈에 띄지 않아도, 쌓이면 결국 보입니다.</p>
+    </div>
+  </section>
+
+</main>
+
+<footer>
+  <div class="wrap">
+    <span class="wordmark-lockup">
+      <svg viewBox="0 0 64 64" fill="none" aria-label="새벽결">
+        <path d="M39 9a8 8 0 1 1 0 16" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" opacity="0.9"/>
+        <rect x="5" y="47" width="54" height="7" rx="2.5" fill="currentColor"/>
+        <rect x="9" y="36" width="44" height="7" rx="2.5" fill="currentColor" opacity="0.8"/>
+        <rect x="15" y="25" width="32" height="7" rx="2.5" fill="currentColor" opacity="0.6"/>
+        <rect x="21" y="14" width="20" height="7" rx="2.5" fill="currentColor" opacity="0.45"/>
+      </svg>
+      <b>새벽결</b>
+    </span>
+    <p class="foot-slogan">쌓이면, 보인다</p>
+    <p class="foot-meta">데모용 가상 브랜드 · © 2026 새벽결</p>
+  </div>
+</footer>
+
+</body>
+</html>
